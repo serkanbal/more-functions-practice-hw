@@ -14,6 +14,8 @@ creator:
 
 Sometimes we all need a bit of guidance in our life. For this assignment, you will create a simple "magic eight ball" that runs on the command line. Like a real  magic eight ball, it will give a random answer to the questions on our minds.
 
+The user won't actually type their question into the command line, but the game should instruct the user to think about their question. Then the game will give a randomly selected response, as if it knew what question they were thinking. Then the game will ask the user if they want to play again, and then the user will type yes or no, and the game will repeat or end as needed.
+
 ## Exercise
 
 #### Requirements

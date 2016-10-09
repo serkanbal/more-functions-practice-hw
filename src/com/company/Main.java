@@ -10,6 +10,12 @@ public class Main {
     mainMenu();
     }
 
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+
     public static void mainMenu() {
         System.out.println("Welcome to Magic 8 Ball!\n");
         System.out.println("       _.a$$$$$a._\n" +
@@ -26,9 +32,9 @@ public class Main {
                 "   `$$$$$$$$$$$$$$$$$'\n" +
                 "     `$$$$$$$$$$$$$'\n" +
                 "       `~$$$$$$$~'\n");
-        System.out.println("1. For Single Question Mode - Type '1Q'" +
-                "\n2. For Double Question Mode - Type '2Q'" +
-                "\n3. To Quit - Type 'Quit'\n");
+        System.out.println("1. For Single Question Mode - Type" + ANSI_BLUE +" '1Q'" + ANSI_RESET +
+                "\n2. For Double Question Mode - Type" + ANSI_BLUE + " '2Q'" + ANSI_RESET +
+                "\n3. To Quit - Type" + ANSI_BLUE + " 'QUIT'\n" + ANSI_RESET);
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
         switch (userInput.toUpperCase()) {
@@ -36,7 +42,7 @@ public class Main {
                 oneQuestionMode();
                 break;
             case "2Q":
-                //doubleQuestionMode();
+                doubleQuestionMode();
                 break;
             case "QUIT":
                 System.exit(0);
@@ -49,16 +55,40 @@ public class Main {
     }
 
     public static void oneQuestionMode() {
-        System.out.println("\nThink of your question and type 'Ready'\n");
+        System.out.println("\nThink of your question and type" + ANSI_YELLOW + " 'READY'\n" + ANSI_RESET);
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
         switch (userInput.toUpperCase()) {
             case "READY":
                 countDownTimer();
-                System.out.println(shakeTheBall());
-                shakeAgain();
+                System.out.println(ANSI_RED + shakeTheBall() + ANSI_RESET);
+                shakeAgainOneQ();
+                break;
+            default:
+                System.out.println("\nThis is not a valid response\n");
+                oneQuestionMode();
+                break;
         }
 
+    }
+
+    public static void doubleQuestionMode() {
+        System.out.println("\nThink of two questions and type" + ANSI_PURPLE + " 'READY'\n" + ANSI_RESET);
+        Scanner input = new Scanner(System.in);
+        String userInput = input.nextLine();
+        switch (userInput.toUpperCase()) {
+            case "READY":
+                countDownTimer();
+                System.out.println("Answer to the First Question:" + ANSI_RED + shakeTheBall() + ANSI_RESET);
+                countDownTimer();
+                System.out.println("Answer to the Second Question:" + ANSI_RED + shakeTheBall() + ANSI_RESET);
+                shakeAgainDoubleQ();
+                break;
+            default:
+                System.out.println("\nThis is not a valid response\n");
+                doubleQuestionMode();
+                break;
+        }
     }
 
     public static int getRandomNumber() {
@@ -67,55 +97,77 @@ public class Main {
     }
 
     public static String shakeTheBall() {
+
         String computerResponse = "";
         int rng = getRandomNumber();
         switch (rng) {
             case 0:
-                computerResponse = "\nIt is decidedly so\n";
+                computerResponse = "\n"+"It is decidedly so\n";
                 break;
             case 1:
-                computerResponse = "\nYes, definitely\n";
+                computerResponse = "\n" + "Yes, definitely\n";
                 break;
             case 2:
-                computerResponse = "\nAs I see it, yes\n";
+                computerResponse = "\n" + "As I see it, yes\n";
                 break;
             case 3:
-                computerResponse = "\nOutlook good\n";
+                computerResponse = "\n" + "Outlook good\n";
                 break;
             case 4:
-                computerResponse = "\nSigns point to yes\n";
+                computerResponse = "\n" + "Signs point to yes\n";
                 break;
             case 5:
-                computerResponse = "\nAsk again later\n";
+                computerResponse = "\n" + "Ask again later\n";
                 break;
             case 6:
-                computerResponse = "\nBetter not tell you now\n";
+                computerResponse = "\n" + "Better not tell you now\n";
                 break;
             case 7:
-                computerResponse = "\nConcentrate and ask again\n";
+                computerResponse = "\n" + "Concentrate and ask again\n";
                 break;
             case 8:
-                computerResponse = "\nMy reply is no\n";
+                computerResponse = "\n" + "My reply is no\n";
                 break;
         }
         return computerResponse;
     }
 
-    public static void shakeAgain() {
+    public static void shakeAgainOneQ() {
         System.out.println("Do you want to play again?" +
-                "\nIf you want to play again, think of your question first and type 'YES'" +
-                "\nIf you don't want to play anymore; type 'NO' to go back to the main menu.\n");
+                "\n1. If you want to play again, think of your question first and type" + ANSI_YELLOW +" 'YES'" + ANSI_RESET +
+                "\n2. If you don't want to play anymore; type" + ANSI_YELLOW +" 'NO'" + ANSI_RESET +" to go back to the main menu.\n");
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
         if (userInput.toUpperCase().contains("YES") == true ||  userInput.toUpperCase().contains("Y") == true) {
             countDownTimer();
-            System.out.println(shakeTheBall());
-            shakeAgain();
+            System.out.println(ANSI_RED + shakeTheBall() + ANSI_RESET);
+            shakeAgainOneQ();
         } else if (userInput.toUpperCase().contains("NO") == true ||  userInput.toUpperCase().contains("N") == true) {
             mainMenu();
         } else {
-            System.out.println("Invalid choice!\n");
-            shakeAgain();
+            System.out.println("\nThis is not a valid response\n");
+            shakeAgainOneQ();
+        }
+
+    }
+
+    public static void shakeAgainDoubleQ() {
+        System.out.println("Do you want to play again?" +
+                "\n1. If you want to play again, think of your questions first and type" + ANSI_PURPLE +" 'YES'" + ANSI_RESET +
+                "\n2. If you don't want to play anymore; type" + ANSI_PURPLE + " 'NO'" + ANSI_RESET + " to go back to the main menu.\n");
+        Scanner input = new Scanner(System.in);
+        String userInput = input.nextLine();
+        if (userInput.toUpperCase().contains("YES") == true ||  userInput.toUpperCase().contains("Y") == true) {
+            countDownTimer();
+            System.out.println("Answer to the First Question:" + ANSI_RED +shakeTheBall() + ANSI_RESET);
+            countDownTimer();
+            System.out.println("Answer to the Second Question:" + ANSI_RED + shakeTheBall() + ANSI_RESET);
+            shakeAgainDoubleQ();
+        } else if (userInput.toUpperCase().contains("NO") == true ||  userInput.toUpperCase().contains("N") == true) {
+            mainMenu();
+        } else {
+            System.out.println("\nThis is not a valid response\n");
+            shakeAgainDoubleQ();
         }
 
     }
@@ -130,4 +182,3 @@ public class Main {
             e.printStackTrace();}
     }
 }
-
